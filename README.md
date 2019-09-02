@@ -7,4 +7,4 @@ The target audience for these documents are IT professionals that already have a
 a Guide to Bitcoin.
 
 ## P2P Network 
-* [Protocol Configuration Message (protconf)](p2p/protconf.md)
+* [Protocol Configuration Message (protoconf)](p2p/protoconf.md)
