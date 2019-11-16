@@ -38,7 +38,7 @@ that have been applied.
 * [getminingcandidate](rpc/GetMiningCandidate.md)
 
 # Document Information
-Authors: Daniel Connolly, nChain Ltd; Shaun O’Kane, nChain Ltd
+Authors: Daniel Connolly, nChain Ltd; Brad Kristensen, nChain Ltd; Shaun O’Kane, nChain Ltd; Steve Shadders, nChain Ltd
 
 Version:
 * 2019-11-14 - Daniel Connolly - initial version, pulling in various previous specifications
@@ -51,3 +51,6 @@ uahf-test-plan.md, all of which are located in the updates directory, were copie
 https://github.com/bitcoincashorg/bitcoincash.org/ on 14th November 2019. The files were originally licensed under the 
 MIT License, which is available in the file [MIT_LICENSE](MIT_LICENSE). The authors of these files were not specified 
 within the files and are not included in the list of authors above. 
+
+The file rpc/GetMiningCandidate.md was previously released under the MIT license which is available in 
+the file [MIT_LICENSE](MIT_LICENSE).

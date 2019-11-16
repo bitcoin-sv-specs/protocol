@@ -15,9 +15,6 @@ A few of the benefits when using RPC getminingcandidate and RPC submitminingsolu
 * Faster JSON parsing and creation 
 * Concise JSON 
 
-## License
-GetMiningCandidate API (GMC) is released under the terms of the MIT license. See LICENSE for more information or see https://opensource.org/licenses/MIT.
-
 ## Example Implementation 
  
 An example CPU-miner program is provided with bitcoind that shows a proof-of-concept use of these functions. The source code is located at src/bitcoin-miner.cpp. 
@@ -96,3 +93,13 @@ Failure: JSONRPCException or error reason comprising of but not limited to the f
 |coinbase decode failed|The supplied coinbase was unable to be parsed| 
  
 Other possible errors can result from the SubmitBlock (BIP22) method in which submitminingsolution ultimately calls upon. 
+
+## License
+Author: Brad Kristensen, nChain Ltd
+
+Based on the work of: Andrew Stone, Bitcoin Unlimited; Johan van der Hoeven
+
+This file was previously released under the MIT License which is available in the file [MIT_LICENSE](../MIT_LICENSE).
+
+In this repository, it has been released under the [Open BSV License](../LICENSE).
+
