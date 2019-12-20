@@ -17,6 +17,7 @@ A full Bitcoin Specification has not been completed yet. At this time we only ha
 that have been applied.
 
 Updates to the Bitcoin Specification (ordered by descending activation date):
+* 2020-02-04 (estimated) - [Genesis Upgrade](updates/genesis-spec.md)
 * 2019-07-24 - [Quasar Protocol Upgrade](updates/2019-07-24%20Quasar%20Protocol%20Upgrade.md)
 * 2018-11-15 - [2018 November Bitcoin Cash Upgrade Specification](updates/2018-11-15%20BCH%20Upgrade%20Spec.md), 
 [Specification for Re-enabling old Opcodes](updates/2018-11-15%20Re-enabling%20Old%20Opcodes.md),
