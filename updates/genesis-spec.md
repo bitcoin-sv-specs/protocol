@@ -173,7 +173,6 @@ The consensus rule that limits the number of checksig operations per megabyte of
 These consensus rules apply to transactions that are confirmed in blocks after Genesis activation.
 
 #### Maximum Transaction Size
-
 The size of a transaction is the size in bytes of the serialized form of the transaction[^2].
 
 The maximum size of a transaction is 1GB (1,000,000,000 bytes). This limitation is expected to be lifted in the future.
@@ -182,7 +181,6 @@ The maximum size of a transaction is 1GB (1,000,000,000 bytes). This limitation 
 The consensus rule that limits the number of checksig operations per transaction has been removed.
 
 #### nLockTime & nSequence
-
 After Genesis activation, the functionality of the nLockTime field of a transaction and the nSequence fields of 
 transaction inputs revert to their original purpose. The rules defined here only apply to transactions that are 
 confirmed after Genesis activation.
@@ -410,8 +408,11 @@ Pay to script hash (P2SH) is a capability that was added to Bitcoin in 2012 by B
 specific output script template. If the specific script template is present in the script of an output that is being 
 spent by an input then it is treated in a different way, rather than being executed normally. 
 
-This feature is being removed by the Genesis Upgrade. The P2SH script template will not be treated “specially” for 
-outputs but will be evaluated normally.
+The p2sh script template is identified as `OP_HASH160 <20 bytes data> OP_EQUAL`, or in hex `a914 <20 bytes data> 87`, 
+where the 20 bytes of data will vary depending on the redeem script being used.
+
+The P2SH capability is being removed by the Genesis Upgrade and the presence of a p2sh script template in an output will 
+invalidate a transaction. 
 
 #### OP_RETURN Functionality
 
