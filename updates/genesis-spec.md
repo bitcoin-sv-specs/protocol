@@ -1,6 +1,6 @@
 # Genesis Upgrade Specification
 
-Version: 2019-12-19
+Version: 2020-01-09
 
 Authors: nChain Ltd
 
@@ -15,7 +15,6 @@ Authors: nChain Ltd
     * Transaction Consensus Rules
         * Maximum Transaction Size
         * Maximum Number of CheckSig Operations per Transaction
-        * Signature Hashing Algorithm
         * nLockTime & nSequence
     * Script Language Rules
         * Data Types    
@@ -153,8 +152,6 @@ It is worth noting that, after Genesis activation, a single transaction may spen
 and after Genesis activation, in which case each input is evaluated under the rules that are applicable to that input 
 based upon the block height that the transaction referenced by that input was confirmed.
 
-
-
 ## Changes to the Bitcoin Specification
  
 ### Block Consensus Rules
@@ -176,7 +173,6 @@ The consensus rule that limits the number of checksig operations per megabyte of
 These consensus rules apply to transactions that are confirmed in blocks after Genesis activation.
 
 #### Maximum Transaction Size
-
 The size of a transaction is the size in bytes of the serialized form of the transaction[^2].
 
 The maximum size of a transaction is 1GB (1,000,000,000 bytes). This limitation is expected to be lifted in the future.
@@ -184,18 +180,7 @@ The maximum size of a transaction is 1GB (1,000,000,000 bytes). This limitation 
 #### Maximum Number of CheckSig Operations per Transaction
 The consensus rule that limits the number of checksig operations per transaction has been removed.
 
-#### Signature Hashing Algorithm
-
-The signature hashing algorithm for UTXO’s created after the Genesis Upgrade remains the same as it was prior to the 
-Genesis Upgrade. This is the signature hashing algorithm that was introduced on the Bitcoin Cash blockchain during the 
-BTC/BCH split on the 1st August 2017. The signature hashing algorithm is described in requirement 6-2 of the 
-[specification](https://github.com/bitcoin-sv/bitcoin-sv/blob/master/doc/abc/uahf-technical-spec.md). 
-
-After the Genesis activation, the original signature hashing algorithm, which is still in use on the BTC blockchain, is 
-valid for outputs created before the Genesis activation.
-
 #### nLockTime & nSequence
-
 After Genesis activation, the functionality of the nLockTime field of a transaction and the nSequence fields of 
 transaction inputs revert to their original purpose. The rules defined here only apply to transactions that are 
 confirmed after Genesis activation.
@@ -423,8 +408,11 @@ Pay to script hash (P2SH) is a capability that was added to Bitcoin in 2012 by B
 specific output script template. If the specific script template is present in the script of an output that is being 
 spent by an input then it is treated in a different way, rather than being executed normally. 
 
-This feature is being removed by the Genesis Upgrade. The P2SH script template will not be treated “specially” for 
-outputs but will be evaluated normally.
+The p2sh script template is identified as `OP_HASH160 <20 bytes data> OP_EQUAL`, or in hex `a914 <20 bytes data> 87`, 
+where the 20 bytes of data will vary depending on the redeem script being used.
+
+The P2SH capability is being removed by the Genesis Upgrade and the presence of a p2sh script template in an output will 
+invalidate a transaction. 
 
 #### OP_RETURN Functionality
 
@@ -482,7 +470,6 @@ Note that:
 *   the time taken to evaluate a transaction by a particular system will vary based on the software used, the resources 
     available, and other dynamic factors such as the load on the system. It is not an exact measurement.
 
-
 ### Standard Local Script Language Policies
 
 Script Language Policies apply to the execution of script.
@@ -513,9 +500,7 @@ The memory usage of a stack is calculated using the same formula described in th
 The default value for this policy is 100MB (100,000,000 bytes). The value of this policy must be less than or equal to 
 the value of the Stack Memory Usage Consensus Rule.
 
-
 ### Standard Local P2P Network Policies
-
 
 #### Propagation of non-Standard Transactions
 
@@ -530,7 +515,6 @@ across the P2P Network.
 
 Note that even though non-standard transactions will be propagated across the P2P Network after Genesis activation, 
 other policies such as the Maximum Acceptable Transaction Size Policy remain in effect.
-
 
 ## Notes
 
