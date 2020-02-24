@@ -268,8 +268,8 @@ This grammar is fully described by the following BNF grammar:
             "OP_10" | "OP_11" | "OP_12" | "OP_13" | 
             "OP_14" | "OP_15" | "OP_16"
 <count-1> ::= a one byte unsigned integer (0-255)
-<count-2> ::= a two byte unsigned integer (0-65535)
-<count-4> ::= a four byte unsigned integer (0-4294967295)
+<count-2> ::= a two byte unsigned integer (0-65535, little-endian encoded)
+<count-4> ::= a four byte unsigned integer (0-4294967295, little-endian encoded)
 <op-push-xx> ::= hex codes 0x01 to 0x4b
 <op-false> ::= "OP_0" | "OP_FALSE"
 <op-true> ::= "OP_1" | "OP_TRUE"
