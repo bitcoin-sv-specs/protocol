@@ -39,15 +39,16 @@ The message payload consists of the following fields:
 
 | Field size | Data type | Name | Description |
 |------------|-----------|------|-------------|
-| variable   | Compact size unit | `numberOfFields` | Contains number of fields following this field. Used for versioning of protoconf message. This specification uses version 1. Version 0 is not allowed. | 
+| variable   | Compact size unit | `numberOfFields` | Contains number of fields following this field. Used for versioning of protoconf message. This specification uses version 2. Version 0 is not allowed. | 
 | variable   | Compact size unit | `maxRecvPayloadLength` | See section “Parameter maxRecvPayloadLength” below. |
+| variable   | Variable string   | `streamPolicies` | See section "Parameter streamPolicies" below. |
 
 
 ### Versioning
 
 Field `numberOfFields` is used to indicate the version of protoconf messages. This allows for adding new fields in the future 
 without changing the P2P protocol version. When a new field is added, the `numberOfFields` is increased by 1. Node 
-implementation must therefore allow extra bytes following currently defined fields and ignore any fields it does now 
+implementation must therefore allow extra bytes following currently defined fields and ignore any fields it does not 
 know about.
 
 The maximum size of `protoconf` message payload (without header) is 1.048.576 bytes.
@@ -77,9 +78,11 @@ data types in a dynamic data structure.
 
 The `protoconf` message can only be used to relax P2P protocol restrictions as implemented in the first release of 
 Bitcoin SV (version 0.1.0). For example: maximum allowed size of P2P message can only be increased through `protoconf` 
-message.  The reason for this is to ensure the compatibility with old clients that do not handle `protoconf` message.
+message. The reason for this is to ensure the compatibility with old clients that do not handle `protoconf` message.
 
-This specification currently only defines one configuration parameter: `maxRecvPayloadLength`.
+This specification currently defines the following configuration parameters:
+- `maxRecvPayloadLength`
+- `streamPolicies`
 
 ### Parameter `maxRecvPayloadLength`
 
@@ -98,6 +101,16 @@ In addition to increasing maximum P2P message size, the presence of `maxRecvPayl
 current limit of `MAX_INV_SZ` (50.000) elements for `getdata` and `inv` messages. The `MAX_INV_SZ` limit is removed and 
 the number of elements in those messages is only limited by `maxRecvPayloadLength` advertised by the 
 receiving peer.
+
+### Parameter `streamPolicies`
+
+This parameter is a variable length string containing a comma separated list of stream policy names the
+sending peer knows about and is happy to use. For strict correctness this parameter should always contain at least
+the name of the `Default` stream policy, although even if it doesn't the remote peer will always assume
+that we do at least support the default stream policy.
+
+For more details about stream policies and their names please see the documentation on [multi-streaming](./multistreams.md)
+within the P2P.
 
 ### Timing and compatibility
 
@@ -165,3 +178,6 @@ message would tighten the limit then both peers would need to agree on new limit
 || 3. Send an INV with payload size 2 MiB (58254 elements). | The remote peer should respect the limit and respond with two getdata messages. First should contain 29127 elements and the second 29127 elements.|
 | Old versions of nodes should ignore unknown protoconf message.| 1. Connect to a remote peer that does not support protoconf message. Perform handshake sequence (`version`, `verack`).| Successful handshake. | 
 | | 2. Send a `protoconf` message. | The remote peer should not disconnect once it receives `protoconf` message.
+| Node should advertise its supported stream policy names in the `streamPolicies` field within protoconf. | 1. Connect to remote peer and perform handshake sequence (`version`, `verack`). | 1. Successful handshake. |
+| | | 2. The peer sends us a protoconf message with `streamPolicies` = `Default,BlockPriority` |
+
