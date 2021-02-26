@@ -31,6 +31,12 @@ Full documentation of the P2P Network Standard has not been completed yet. At th
 that have been applied.
 
 * [Protocol Configuration Message (protoconf)](p2p/protoconf.md)
+* [Multi-Streams](p2p/multistreams.md)
+
+Updates to the P2P Network Standard:
+* 2021-02-10 - [Multi-Streams](p2p/multistreams.md) adds the capability to establish multiple connections between peers
+to enable prioritization of different types of communication traffic. This update appends an additional field to the `version`
+message. 
 
 ## RPC Standard
 Full documentation of the RPC Standard has not been completed yet. At this time we only have documentation for the updates
