@@ -40,7 +40,7 @@ The message payload consists of the following fields:
 | Field size | Data type | Name | Description |
 |------------|-----------|------|-------------|
 | variable   | Compact size unit | `numberOfFields` | Contains number of fields following this field. Used for versioning of protoconf message. This specification uses version 2. Version 0 is not allowed. | 
-| variable   | Compact size unit | `maxRecvPayloadLength` | See section “Parameter maxRecvPayloadLength” below. |
+| 4 bytes   | uint32_t | `maxRecvPayloadLength` | See section “Parameter maxRecvPayloadLength” below. |
 | variable   | Variable string   | `streamPolicies` | See section "Parameter streamPolicies" below. |
 
 
