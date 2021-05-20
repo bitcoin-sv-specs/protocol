@@ -22,15 +22,31 @@ Binary encoded message format.
 |**IP address count**|Varint, >1, where 0 is invalid|1 – 9 bytes|
 |**List of IP addresses**|<p>List of IP addresses.</p><p>If IPv4, address is 32 bits, network byte order</p><p>If IPv6, address is 128 bits, network byte order</p>|Count \* address size|
 |**Input count**|Varint, >=0, where 0 means notifications for all inputs, must be <= num tx inputs|1 – 9 bytes|
-|**List of inputs**|List of varints, identifying the inputs requiring notification|Count \* varint|
+|**List of inputs**|List of varints, identifying the inputs requiring notification. This field only exists if input count > 0.|Count \* varint|
 
 Future protocol versions may use the reserved bits (e.g. use signal bit 6 for SSL) and update the message format with extra fields (e.g. port numbers, payment reward details).
+
+## Validating the Callback Message
+
+Below are examples of malformed callback messages which should be treated as invalid:
+
+|**Callback Message**|**Invalid Reason**|
+| :- | :- |
+|**OP_FALSE OP_RETURN 'dsnt'**|Missing version field|
+|**OP_FALSE OP_RETURN 'dsnt' FF**|Invalid version field|
+|**OP_FALSE OP_RETURN 'dsnt' 01 00**|IP address count of 0 is not allowed|
+|**OP_FALSE OP_RETURN 'dsnt' 01 01**|IP address count is 1, but missing IP address|
+|**... 00 AB**|Input count is 0, so no data should follow|
+|**... 01 07 08**|Input count is 1, so only 1 input should follow|
+|**... 03 02**|Input count is 3, but missing 2 inputs|
 
 ## Callback Server
  
 The HTTP callback server is publicly accessible and listens on port 80 for HTTP (version 1 does not support HTTPS or using a custom port)
 
 To help BSV nodes identify a callback server, every HTTP response MUST include the header field “x-bsv-dsnt: <value>” (where value is dependent on the endpoint). If deployment is behind a HTTP cache (e.g. Varnish), the cache must be configured so that it does not strip out this header field.
+
+Remark:  RFC 6648 recommends against using “x-” prefix for application protocols. Use of “x-bsv-dsnt” may be deprecated in the future, for example, if “bsv-dsnt” is registered with IANA.
 
 ### Two-Phase Submit
 The API implements a two-phase submit protocol which mandates a BSV node MUST first query the callback server, to ask if it wants to receive a proof, before submitting the proof. 
@@ -120,6 +136,26 @@ For version 1, using the /submit parameters,
 1.	Check sha256d(proof) == ctxid
 2.	Check utxo spent by input txid:n is the same utxo being spent by input ctxid:cn
 3.	The conflicting input script must validate.
+
+## User-facing changes to BSV node
+
+### New Config Option: dsnotifylevel=level
+
+This option instructs the node on how to handle double spends, for a conflicting input, when at least one of the conflicting transactions is dsnt-enabled. The notification levels are:
+
+0.  No notification (disables double-spend reporting)
+1.  Notify only for standard UTXOs (new default behaviour)
+2.  Notify for all UTXOs
+
+### New Config Option: dsendpointmaxcount=n
+
+This option sets a limit on the number of endpoints a node should attempt to notify for each dsnt-enabled transaction. The minimum value is 1, the default value is 3.
+
+Example: A node, with a default setting of 3, will only attempt to contact the first 3 endpoints, even if the callback message contains 5 unique IP addresses.
+
+Any bad endpoints (duplicates, uncontactable, etc.) in the IP address list will count towards the limit. Also, the node will not send multiple notifications to the same endpoint for duplicate IP addresses.
+
+Example: A node, with a default setting of 3, will only contact the given endpoint once, if the callback message contains 2 duplicate IP addresses.
 
 ## Double-Spend Detection and Processing
 
