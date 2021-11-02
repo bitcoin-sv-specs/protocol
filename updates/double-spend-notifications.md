@@ -207,6 +207,5 @@ The policy limits as configured by the node are used, since the conflicting tran
 
 ## Document Information
 Version 
-* 2020-05-07 – Simon Liu – initial version.
-
+* 13/05/2021 – Simon Liu – amended version.
 
