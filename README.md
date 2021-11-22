@@ -34,9 +34,15 @@ that have been applied.
 * [Multi-Streams](p2p/multistreams.md)
 
 Updates to the P2P Network Standard:
+* 2021-11-22 - [P2P Large Message Support](p2p/large_messages.md) adds the capability for peers to send and receive blocks 
+that are larger than 4GB.
 * 2021-02-10 - [Multi-Streams](p2p/multistreams.md) adds the capability to establish multiple connections between peers
 to enable prioritization of different types of communication traffic. This update appends an additional field to the `version`
-message. 
+message.
+
+Protocol versions:
+* 70016 - added [P2P Large Messsage Support](p2p/large_messages.md). Implemented in Bitcoin SV node implementation in version 1.0.10.
+* 70015 - primary protocol version used by Bitcoin SV node implementation up to version 1.0.9 
 
 ## RPC Standard
 Full documentation of the RPC Standard has not been completed yet. At this time we only have documentation for the updates
@@ -48,6 +54,7 @@ that have been applied.
 Authors: Daniel Connolly, nChain Ltd; Brad Kristensen, nChain Ltd; Shaun O’Kane, nChain Ltd; Steve Shadders, nChain Ltd
 
 Version:
+* 2021-11-22 - Daniel Connolly - added [P2P Large Message Support](p2p/large_messages.md)
 * 2019-11-14 - Daniel Connolly - initial version, pulling in various previous specifications
 
 All documents in this collection, are released under the terms of the Open BSV License. See the file [LICENSE](LICENSE) 
