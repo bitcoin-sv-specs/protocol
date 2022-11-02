@@ -34,6 +34,8 @@ that have been applied.
 * [Multi-Streams](p2p/multistreams.md)
 
 Updates to the P2P Network Standard:
+* 2022-09-16 - [Miner ID Support](p2p/miner_id.md) and [Enriched Headers](p2p/miner_id_headers.md). Enhancements to support
+some features of miner ID.
 * 2021-11-22 - [P2P Large Message Support](p2p/large_messages.md) adds the capability for peers to send and receive blocks 
 that are larger than 4GB.
 * 2021-02-10 - [Multi-Streams](p2p/multistreams.md) adds the capability to establish multiple connections between peers
@@ -51,9 +53,11 @@ that have been applied.
 * [getminingcandidate](rpc/GetMiningCandidate.md)
 
 # Document Information
-Authors: Daniel Connolly, nChain Ltd; Brad Kristensen, nChain Ltd; Shaun O’Kane, nChain Ltd; Steve Shadders, nChain Ltd
+Authors: Daniel Connolly, nChain Ltd; Brad Kristensen, nChain Ltd; Shaun O’Kane, nChain Ltd; Steve Shadders, nChain Ltd;
+Richard Mills, nChain Ltd
 
 Version:
+* 2022-09-16 - Richard Mills - added [Miner ID Support](p2p/miner_id.md) and [Enriched Headers](p2p/miner_id_headers.md)
 * 2021-11-22 - Daniel Connolly - added [P2P Large Message Support](p2p/large_messages.md)
 * 2019-11-14 - Daniel Connolly - initial version, pulling in various previous specifications
 
