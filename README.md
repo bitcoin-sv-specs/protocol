@@ -17,6 +17,7 @@ A full Bitcoin Specification has not been completed yet. At this time we only ha
 that have been applied.
 
 Updates to the Bitcoin Specification (ordered by descending activation date):
+* 2026-04-07 - [Chronicle Upgrade](updates/chronicle-spec.md)
 * 2022-11-11 - [Confiscation Transactions](updates/confiscation-transactions.md)
 * 2020-02-04 - [Genesis Upgrade](updates/genesis-spec.md)
 * 2019-07-24 - [Quasar Protocol Upgrade](updates/2019-07-24%20Quasar%20Protocol%20Upgrade.md)
